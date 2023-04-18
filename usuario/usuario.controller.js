@@ -1,4 +1,4 @@
-const user = require("../usuario/usuario.model");
+const user = require("./usuario.model");
 
 async function getUsers(req, res) {
     const users = await user.find();
@@ -10,19 +10,22 @@ async function getUsers(req, res) {
 }
 
 async function createNewUser(req, res){
-    const newUSer = await user.insertMany({
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
-        phone_number: req.body.phone_number,
-        address: req.body.address,
-        role: req.body.role
-    })
-
-    if(!newUSer){
-        res.status(500).json({"error":"Error Creando Usuario"})
-    }else{
-        res.status(200).json(newUSer);
+    try{
+        const newUSer = await user.insertMany({
+            name: req.body.name,
+            password: req.body.password,
+            email: req.body.email,
+            phone_number: req.body.phone_number,
+            address: req.body.address,
+            role: req.body.role
+        })
+        if(!newUSer){
+            res.status(500).json({"error":"Error Creando Usuario"})
+        }else{
+            res.status(200).json(newUSer);
+        }
+    }catch(error){
+        res.status(500).json({"error": error.message})
     }
 }
 
@@ -35,6 +38,7 @@ async function updateUser(req, res){
         phone_number: req.body.phone_number,
         address: req.body.address,
         role: req.body.role
+        
     },
     {
         new: true,
@@ -57,11 +61,18 @@ async function findUserByID(req, res){
 }
 
 async function deleteUser(req, res) {
-    const deletedUser = await user.findByIdAndDelete(req.params.id);
+    const deletedUser = await user.findByIdAndUpdate(req.params.id, 
+        {
+            active:false,
+        },
+        {
+            new: true,
+        }
+        );
     if (!deletedUser) {
         return res.status(404).json({ message: "Usuario no encontrado" });
     }
-    res.status(200).json({ message: "Usuario eliminado correctamente." });
+    res.status(200).json({ message: "Usuario Inhabilitado Correctamente." });
 
 }
 
