@@ -29,17 +29,14 @@ async function getOneProductByID(req, res) {
 }
 
 async function getOnePruductByRestaurantOrCategory(req, res) {
-    console.log("HOLA")
     try {
         const { restaurant, category } = req.query;
-        console.log(req.query);
         const filtrado = {};
         if (restaurant) {
             filtrado.id_restaurant = restaurant;
         } else if (category) {
             filtrado.category = category;
         }
-        console.log(filtrado);
         const productFinded = await product.find(filtrado);
         if (productFinded.length == 0) {
             res.status(500).json({ "message": "No Existe un Producto con esta categoria o ID de restaurante" })

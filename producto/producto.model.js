@@ -24,8 +24,8 @@ const productSchema = mongoose.Schema(
             ref: "Restaurants",
             required: true,
             validate : {
-                validator: async function (v) {
-                    const rest = await mongoose.model("Restaurant").find(v);
+                validator: async function (value) {
+                    const rest = await mongoose.model("Restaurant").find(value);
                     if(rest.length == 0){
                         throw new Error ("El restaurante no existe ingresa un ID Valido");
                     }

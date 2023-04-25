@@ -10,11 +10,11 @@ const router = Router();
 //obtener todos los productos
 router.get("/", getProducts);;
 
-//obtener un producto por ID
-router.get("/:id",getOneProductByID);
-
 //obtener un producto por categoria o restaurante
 router.get("/restOrCateg", getOnePruductByRestaurantOrCategory);
+
+//obtener un producto por ID
+router.get("/:id",getOneProductByID);
 
 //crear un nuevo producto
 router.post("/", createNewProduct);
