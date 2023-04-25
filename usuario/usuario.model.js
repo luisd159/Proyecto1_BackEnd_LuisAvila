@@ -32,11 +32,15 @@ const userSchema = mongoose.Schema(
             type: String,
             enum: ["Cliente", "Domiciliario", "Administrador"],
         },
-        active:{
+        active: {
             type: Boolean,
             required: true,
             default: true,
         },
+    },
+    {
+        timestamp: true,
+        collection: "users"
     }
 )
 
