@@ -22,11 +22,10 @@ const userSchema = mongoose.Schema(
             type: String,
             maxlength: 10,
             minlength: 10,
-            //match: [/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, 'Please fill a valid Phone Number'],
         },
         address: {
             type: String,
-            maxlenght: 48,
+            maxlength: 48,
         },
         role: {
             type: String,
@@ -34,13 +33,12 @@ const userSchema = mongoose.Schema(
         },
         active: {
             type: Boolean,
-            required: true,
             default: true,
         },
     },
     {
-        timestamp: true,
-        collection: "users"
+        timestamps: true,
+        collection: "Users"
     }
 )
 

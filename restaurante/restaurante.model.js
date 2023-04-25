@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const restaurant = mongoose.Schema(
+const restaurantSchema = mongoose.Schema(
     {
         name: {
             type: String,
@@ -15,18 +15,22 @@ const restaurant = mongoose.Schema(
         phone_number: {
             type: String,
             required: true,
-            match: [/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, 'Please fill a valid Phone Number'],
+            maxlength: 10,
+            minlength: 10,
         },
         category: {
             type: String,
             required: true,
         },
-        active:{
+        active: {
             type: Boolean,
-            required: true,
             default: true,
         },
+    },
+    {
+        timestamps: true,
+        collection: "Restaurants"
     }
 )
 
-module.exports = mongoose.model("Restaurant", restaurant);
+module.exports = mongoose.model("Restaurant", restaurantSchema);
