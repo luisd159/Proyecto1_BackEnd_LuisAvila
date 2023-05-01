@@ -3,12 +3,16 @@ const { getUsers,
         updateUser,
         findUserByID,
         deleteUser,
-        createNewUser} = require("./usuario.controller");
+        createNewUser,
+        GetUserByEmailAndPassword} = require("./usuario.controller");
 
 const router = Router();
 
 //devuelve todos los usuarios
 router.get("/", getUsers);
+
+//devuelve un usuario por Email y Contraseña
+router.get("/auth", GetUserByEmailAndPassword);
 
 //devuelve un usuario por id
 router.get("/:id", findUserByID);
