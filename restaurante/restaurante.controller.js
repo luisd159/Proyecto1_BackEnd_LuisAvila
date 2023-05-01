@@ -7,12 +7,11 @@ async function getRestaurants(req, res) {
         if (rest.length === 0) {
             res.status(500).json({ "message": "Restaurantes No Encontrados" })
         } else {
-            res.status(200).json(rest);
+            res.status(200).json(rest.sort((a,b)=> b.numPedidos - a.numPedidos));
         }
     } catch (error) {
         res.status(500).json({ "message": error.message });
     }
-
 }
 
 async function updateRestaurant(req, res) {
@@ -23,6 +22,7 @@ async function updateRestaurant(req, res) {
                 address: req.body.address,
                 phone_number: req.body.phone_number,
                 category: req.body.category,
+                numPedidos: req.body.numPedidos,
             },
             {
                 new: true,
@@ -36,7 +36,6 @@ async function updateRestaurant(req, res) {
     } catch (error) {
         res.status(500).json({ "message": error.message });
     }
-
 }
 
 async function getRestaurantByID(req, res) {
@@ -50,7 +49,6 @@ async function getRestaurantByID(req, res) {
     } catch (error) {
         res.status(500).json({ "message": error.message });
     }
-
 }
 
 async function createNewRestaurant(req, res) {
@@ -60,6 +58,7 @@ async function createNewRestaurant(req, res) {
             address: req.body.address,
             phone_number: req.body.phone_number,
             category: req.body.category,
+            numPedidos: req.body.numPedidos,
         })
         if (!newRestaurant) {
             res.status(500).json({ "message": "Error Creando Restaurante" })
@@ -69,7 +68,6 @@ async function createNewRestaurant(req, res) {
     } catch (error) {
         res.status(500).json({ "message": error.message })
     }
-
 }
 
 async function deleteRestaurant(req, res) {
