@@ -38,6 +38,26 @@ async function updateRestaurant(req, res) {
     }
 }
 
+async function getOneRestaurantByOrCategory(req, res) {
+    try {
+        const { Name, Category } = req.query;
+        const filtrado = {};
+        if (Name) {
+            filtrado.name = Name;
+        }else if (Category) {
+            filtrado.category = Category;
+        }
+        const restaurantFinded = await restaurant.find(filtrado);
+        if (restaurantFinded.length == 0) {
+            res.status(500).json({ "message": "No Existe un Restaurante con esta categoria o nombre de restaurante" })
+        } else {
+            res.status(200).json(restaurantFinded);
+        }
+    } catch (error) {
+        res.status(500).json({ "message": error.message });
+    }
+}
+
 async function getRestaurantByID(req, res) {
     try {
         const rest = await restaurant.findById(req.params.id);
@@ -96,5 +116,6 @@ module.exports = {
     createNewRestaurant,
     getRestaurantByID,
     deleteRestaurant,
-    updateRestaurant
+    updateRestaurant,
+    getOneRestaurantByOrCategory
 }

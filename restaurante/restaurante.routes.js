@@ -3,21 +3,22 @@ const { getRestaurants,
         createNewRestaurant, 
         getRestaurantByID, 
         deleteRestaurant,
-        updateRestaurant} = require("./restaurante.controller");
+        updateRestaurant,
+        getOneRestaurantByOrCategory} = require("./restaurante.controller");
 const router = Router();
 
 
 //devuelve todos los restaurantes
 router.get("/", getRestaurants);
 
+//devuelve un restaurante por categoria o nombre similar
+router.get("/nameorid", getOneRestaurantByOrCategory);
+
 //devuelve un restaurante por la id proveida
 router.get("/:id" , getRestaurantByID);
 
 //metodo post para crear un restaurante
 router.post("/", createNewRestaurant);
-
-//devuelve un restaurante por categoria o nombre similar
-
 
 //update a restaurante by id
 router.patch("/:id", updateRestaurant);

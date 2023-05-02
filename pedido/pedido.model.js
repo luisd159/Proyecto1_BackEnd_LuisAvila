@@ -10,11 +10,10 @@ const pedido = mongoose.Schema(
             validate : {
                 validator: async function (value) {
                     const user = await mongoose.model("User").findById(value);
-                    if(user.length == 0){
+                    if(!user){
                         throw new Error ("El usuario no existe. Ingresa un ID Valido");
                     }
-                    console.log(user.role);
-                    if(user.role != "Cliente"){
+                    if(user.role !== "Cliente"){
                         throw new Error ("El id ingresado no pertence a ningun usuario cliente");
                     }
                 },
@@ -28,7 +27,7 @@ const pedido = mongoose.Schema(
             validate : {
                 validator: async function (value) {
                     const rest = await mongoose.model("Restaurant").find(value);
-                    if(rest.length == 0){
+                    if(!rest){
                         throw new Error ("El Restaruante no existe. Ingresa un ID Valido");
                     }
                 },
@@ -37,26 +36,56 @@ const pedido = mongoose.Schema(
         id_domiciliario: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Users",
-            required: true,
-            immutable: true,
             validate : {
                 validator: async function (value) {
                     const user = await mongoose.model("User").findById(value);
-                    if(user.length == 0){
+                    console.log("AAAAAAAAAAAAAAAAAAAA");
+                    if(!user){
                         throw new Error ("El usuario no existe. Ingresa un ID Valido");
                     }
-                    console.log(user.role);
-                    if(user.role != "Domiciliario"){
+                    if(user.role !== "Domiciliario"){
                         throw new Error ("El id ingresado no pertence a ningun usuario domiciliario");
                     }
                 },
             },
         },
+        productos: [
+            {
+                id_producto:{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Users",
+                required: true,
+                immutable: true,
+                validate : {
+                    validator: async function (value) {
+                        const product = await mongoose.model("Product").findById(value);
+                        if(product.length == 0){
+                            throw new Error ("El produco no existe. Ingresa un ID Valido");
+                        }
+                    },
+                },
+                },
+                cantidad: {
+                    type: Number,
+                    default: 1,
+                    immutable: true,
+                }
 
-
+            }
+        ],
+        estado: {
+            type: String,
+            required: true,
+            default: "Creado",
+            enum: ["Creado", "Enviado", "Aceptado", "Recibido", "En Direccion", "Realizado"],
+        },
+        active: {
+            type: Boolean,
+            default: true,
+        },
     },
     {
-        timestamp: true,
+        timestamps: true,
         collection: "Pedidos"
     }
 )

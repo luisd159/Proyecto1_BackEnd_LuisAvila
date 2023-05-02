@@ -21,7 +21,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/restaurants", restaurantRoutes);
 app.use("/products", productRoutes);
-app.use("/pedidos", pedidosRoutes);
+app.use("/delivery", pedidosRoutes);
 
 // Endpoint para 404
 app.use((req, res) => {
